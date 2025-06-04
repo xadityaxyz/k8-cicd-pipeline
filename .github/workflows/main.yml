@@ -3,7 +3,7 @@ name: Checkmarx SAST Scan
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   sast-scan:
