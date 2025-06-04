@@ -9,27 +9,19 @@ jobs:
   sast-scan:
     runs-on: self-hosted
 
-    env:
-      CX_USER: ${{ secrets.CX_USER }}
-      CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
-      CX_SERVER_URL: ${{ secrets.CX_SERVER_URL }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: List CxConsolePlugin contents (debugging)
-        shell: cmd
-        run: dir C:\CxConsolePlugin-1.1.38
-
       - name: Run Checkmarx Scan
         shell: cmd
         run: |
+          echo Running Checkmarx SAST scan...
           call C:\CxConsolePlugin-1.1.38\runCxConsole.cmd Scan -v ^
-            -CxServer %CX_SERVER_URL% ^
-            -ProjectName "k8-cicd-pipeline" ^
-            -CxUser %CX_USER% ^
-            -CxPassword %CX_PASSWORD% ^
+            -CxServer "%CX_SERVER_URL%" ^
+            -ProjectName "CxServer\Training\k8-cicd-pipeline" ^
+            -CxUser "%CX_USER%" ^
+            -CxPassword "%CX_PASSWORD%" ^
             -LocationType folder ^
             -LocationPath "%CD%" ^
             -Preset "Checkmarx Default"
