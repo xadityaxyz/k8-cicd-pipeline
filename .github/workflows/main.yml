@@ -1,4 +1,4 @@
-name: Checkmarx SAST On-Prem Scan
+name: Checkmarx SAST Scan
 
 on:
   push:
@@ -6,22 +6,20 @@ on:
       - main
 
 jobs:
-  checkmarx-sast:
-    runs-on: self-hosted  # Must be Windows self-hoste
+  sast-scan:
+    runs-on: self-hosted  # Your self-hosted runner
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run CxConsole Scan
+      - name: Run Checkmarx Scan
         run: |
-          CxConsole.exe Scan -v ^
-            -CxServer "${{ secrets.CX_SERVER_URL }}" ^
-            -ProjectName "GitHub-SAST-Scan" ^
-            -CxUser "${{ secrets.CX_USER }}" ^
-            -CxPassword "${{ secrets.CX_PASSWORD }}" ^
-            -LocationType folder ^
-            -LocationPath "${{ github.workspace }}" ^
-            -Preset "Checkmarx Default" ^
-            -Team "/CxServer/Users" ^
-            -SASTHost "${{ secrets.CX_SERVER_URL }}"
+          "C:\CxConsolePlugin-1.1.38\runCxConsole" Scan -v \
+          -CxServer http://adityaw-lt/ \
+          -ProjectName "YourProjectName" \
+          -CxUser adityawadekar \
+          -CxPassword "Demo?@@?123" \
+          -LocationType folder \
+          -LocationPath "${{ github.workspace }}" \
+          -Preset "Checkmarx Default"
