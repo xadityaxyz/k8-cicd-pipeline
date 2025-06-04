@@ -7,7 +7,7 @@ on:
 
 jobs:
   checkmarx-sast:
-    runs-on: self-hosted  # Must be Windows self-hosted
+    runs-on: self-hosted  # Must be Windows self-hoste
 
     steps:
       - name: Checkout Code
