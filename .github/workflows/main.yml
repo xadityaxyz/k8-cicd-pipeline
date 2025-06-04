@@ -18,18 +18,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: List CxConsolePlugin folder to verify exe presence
+      - name: List CxConsolePlugin contents (debugging)
         shell: cmd
         run: dir C:\CxConsolePlugin-1.1.38
 
       - name: Run Checkmarx Scan
         shell: cmd
         run: |
-          C:\CxConsolePlugin-1.1.38\runCxConsole.exe Scan -v ^
-          -CxServer %CX_SERVER_URL% ^
-          -ProjectName "k8-cicd-pipeline" ^
-          -CxUser %CX_USER% ^
-          -CxPassword %CX_PASSWORD% ^
-          -LocationType folder ^
-          -LocationPath "%CD%" ^
-          -Preset "Checkmarx Default"
+          call C:\CxConsolePlugin-1.1.38\runCxConsole.cmd Scan -v ^
+            -CxServer %CX_SERVER_URL% ^
+            -ProjectName "k8-cicd-pipeline" ^
+            -CxUser %CX_USER% ^
+            -CxPassword %CX_PASSWORD% ^
+            -LocationType folder ^
+            -LocationPath "%CD%" ^
+            -Preset "Checkmarx Default"
