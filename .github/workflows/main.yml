@@ -1,25 +1,20 @@
-name: Checkmarx SAST Scan
-
-on:
-  push:
-    branches:
-      - master
-
 jobs:
   sast-scan:
-    runs-on: self-hosted  # Your self-hosted runn
-
+    runs-on: windows-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Run Checkmarx Scan
+      - name: Run Checkmarx SAST scan
+        shell: pwsh
+        env:
+          CX_USER: ${{ secrets.CX_USER }}
+          CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
         run: |
-          "C:\CxConsolePlugin-1.1.38\runCxConsole" Scan -v \
-          -CxServer http://adityaw-lt/ \
-          -ProjectName "YourProjectName" \
-          -CxUser adityawadekar \
-          -CxPassword "Demo?@@?123" \
-          -LocationType folder \
-          -LocationPath "${{ github.workspace }}" \
+          "C:\CxConsolePlugin-1.1.38\runCxConsole" Scan -v `
+          -CxServer http://adityaw-lt/ `
+          -ProjectName "k8-cicd-pipeline" `
+          -CxUser $env:CX_USER `
+          -CxPassword $env:CX_PASSWORD `
+          -LocationType folder `
+          -LocationPath $env:GITHUB_WORKSPACE `
           -Preset "Checkmarx Default"
