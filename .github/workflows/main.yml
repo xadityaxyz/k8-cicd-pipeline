@@ -1,20 +1,30 @@
+name: Checkmarx SAST Scan
+
+on:
+  push:
+    branches:
+      - master
+
 jobs:
   sast-scan:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
+    runs-on: self-hosted
 
-      - name: Run Checkmarx SAST scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Checkmarx Scan (Debug)
         shell: pwsh
         env:
-          CX_USER: ${{ secrets.CX_USER }}
-          CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
+          CX_USER: adityawadekar
+          CX_PASSWORD: "Demo?@@?123"
         run: |
+          Write-Host "Starting Checkmarx scan in debug mode..."
           "C:\CxConsolePlugin-1.1.38\runCxConsole" Scan -v `
-          -CxServer http://adityaw-lt/ `
-          -ProjectName "k8-cicd-pipeline" `
-          -CxUser $env:CX_USER `
-          -CxPassword $env:CX_PASSWORD `
-          -LocationType folder `
-          -LocationPath $env:GITHUB_WORKSPACE `
-          -Preset "Checkmarx Default"
+            -CxServer http://adityaw-lt/ `
+            -ProjectName "YourProjectName" `
+            -CxUser $env:CX_USER `
+            -CxPassword $env:CX_PASSWORD `
+            -LocationType folder `
+            -LocationPath "${{ github.workspace }}" `
+            -Preset "Checkmarx Default"
