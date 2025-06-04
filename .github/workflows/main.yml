@@ -18,9 +18,10 @@ jobs:
         env:
           CX_USER: ${{ secrets.CX_USER }}
           CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
+          CX_SERVER_URL: ${{ secrets.CX_SERVER_URL }}
         run: |
           "C:\CxConsolePlugin-1.1.38\runCxConsole.exe" Scan -v ^
-          -CxServer http://adityaw-lt/ ^
+          -CxServer %CX_SERVER_URL% ^
           -ProjectName "k8-cicd-pipeline" ^
           -CxUser %CX_USER% ^
           -CxPassword %CX_PASSWORD% ^
