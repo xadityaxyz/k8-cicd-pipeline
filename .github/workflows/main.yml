@@ -7,24 +7,20 @@ on:
 
 jobs:
   sast-scan:
-    runs-on: self-hosted
+    runs-on: self-hosted  # Make sure your runner is tagged as self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Checkmarx Scan (Debug)
-        shell: pwsh
-        env:
-          CX_USER: adityawadekar
-          CX_PASSWORD: "Demo?@@?123"
+      - name: Run Checkmarx SAST Scan
+        shell: cmd
         run: |
-          Write-Host "Starting Checkmarx scan in debug mode..."
-          "C:\CxConsolePlugin-1.1.38\runCxConsole" Scan -v `
-            -CxServer http://adityaw-lt/ `
-            -ProjectName "YourProjectName" `
-            -CxUser $env:CX_USER `
-            -CxPassword $env:CX_PASSWORD `
-            -LocationType folder `
-            -LocationPath "${{ github.workspace }}" `
-            -Preset "Checkmarx Default"
+          "C:\CxConsolePlugin-1.1.38\runCxConsole.exe" Scan -v ^
+          -CxServer http://adityaw-lt/ ^
+          -ProjectName "k8-cicd-pipeline" ^
+          -CxUser adityawadekar ^
+          -CxPassword "Demo?@@?123" ^
+          -LocationType folder ^
+          -LocationPath "%CD%" ^
+          -Preset "Checkmarx Default"
