@@ -7,20 +7,23 @@ on:
 
 jobs:
   sast-scan:
-    runs-on: self-hosted  # Make sure your runner is tagged as self-hosted
+    runs-on: self-hosted  # Your Windows self-hosted runner
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Run Checkmarx SAST Scan
         shell: cmd
+        env:
+          CX_USER: ${{ secrets.CX_USER }}
+          CX_PASSWORD: ${{ secrets.CX_PASSWORD }}
         run: |
           "C:\CxConsolePlugin-1.1.38\runCxConsole.exe" Scan -v ^
           -CxServer http://adityaw-lt/ ^
           -ProjectName "k8-cicd-pipeline" ^
-          -CxUser adityawadekar ^
-          -CxPassword "Demo?@@?123" ^
+          -CxUser %CX_USER% ^
+          -CxPassword %CX_PASSWORD% ^
           -LocationType folder ^
           -LocationPath "%CD%" ^
           -Preset "Checkmarx Default"
