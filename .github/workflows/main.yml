@@ -7,7 +7,7 @@ on:
 
 jobs:
   sast-scan:
-    runs-on: self-hosted  # Your self-hosted runne
+    runs-on: self-hosted  # Your self-hosted runn
 
     steps:
       - name: Checkout code
