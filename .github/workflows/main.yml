@@ -13,17 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Checkmarx SAST Scan
+      - name: Run Checkmarx Scan via CxConsole
         shell: cmd
         run: |
-          echo Starting Checkmarx scan...
-          call "C:\CxConsolePlugin-1.1.38\runCxConsole.cmd" Scan -v ^
-            -cxserver "%CX_SERVER_URL%" ^
-            -projectname "CxServer\Training\k8-cicd-pipeline" ^
-            -cxuser "%CX_USER%" ^
-            -cxpassword "%CX_PASSWORD%" ^
-            -locationtype folder ^
-            -locationpath "%CD%" ^
-            -preset "Checkmarx Default" ^
-            -incremental ^
-            -reportpdf "CxScanReport.pdf"
+          C:\CxConsolePlugin-1.1.38\runCxConsole.cmd Scan ^
+          -CxServer http://adityaw-lt ^
+          -CxUser %CX_USER% ^
+          -CxPassword %CX_PASSWORD% ^
+          -ProjectName "k8-cicd-pipeline" ^
+          -LocationType folder ^
+          -LocationPath "%GITHUB_WORKSPACE%" ^
+          -Preset "Checkmarx Default" ^
+          -ReportPDF "%GITHUB_WORKSPACE%\scan-report.pdf"
+
+    env:
+      CX_USER: adityawadekar
+      CX_PASSWORD: Demo?@@?123
